@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= requite boostrap_sprockets
 //= require angular-app/angular
 //= require angular-app/angular-ui-router
 //= require angular-app/angular-messages
