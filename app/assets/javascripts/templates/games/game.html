@@ -1,0 +1,402 @@
+<script>
+  solo_game = 0
+  field_width = 1020
+  field_height = 625
+  field_top = 1
+  field_left = 1
+  field_border_width = 1
+  
+  instructions_top = field_top + 5
+  instructions_left = field_left + field_width - 100
+  instructions_color = 'white'
+  instructions_background = 'default'
+  instructions_text = 'Bat1:F,J<br />' +
+                      'Bat2:Z,X<br />' +
+                      'Shift+R: Restart<br />' +
+                      '<a href="3d.html" style="color:white;">3D</a>'
+  
+  bat1_width = 60
+  bat1_height = 10
+  bat1_color = 'lightgreen'
+  
+  bat2_width = 60
+  bat2_height = 10
+  bat2_color = 'lightgreen'
+  
+  ball_width = 12
+  ball_height = 12
+  ball_color = 'yellow'
+  
+  bat1_left = (field_width - bat1_width) / 2
+  bat1_top = field_height + field_top - bat1_height - 21
+  bat2_left = (field_width - bat2_width) / 2
+  bat2_top = field_top + field_border_width + 22
+  
+  ball_left = bat1_left + (bat1_width - ball_width) / 2
+  ball_top = field_top + field_border_width + 148
+  
+  random_objects = {
+    a: {
+      width: 105,
+      height: 281,
+      background: 'orange',
+      top: 254,
+      left: 625
+    },
+    b: {
+      width: 75,
+      height: 281,
+      background: 'green',
+      top: 154,
+      left: 65
+    },
+    c: {
+      width: 155,
+      height: 23,
+      background: 'red',
+      top: 154,
+      left: 141
+    }
+  }
+  
+  //style
+  document.write('<style>body {background: blue;}</style>')
+  
+  //field
+  document.write('<div id="field" style="position:absolute; top:' + field_top + 'px; left:' + field_left + 'px; ')
+  document.write('width:' + field_width + 'px; height:' + field_height + 'px; border: 1px solid white;"></div>')
+  
+  //instructions
+  document.write('<div id="instructions" style="position:absolute; top:' + instructions_top + '; left:')
+  document.write(instructions_left + '; color:' + instructions_color + '; background:' + instructions_background)
+  document.write('; opacity:0.4;">' + instructions_text + '</div>')
+  
+  //bat1
+  document.write('<div id="bat1" style="position:absolute; left:' + bat1_left + 'px; top:' + bat1_top + 'px; ')
+  document.write('width:' + bat1_width + 'px; height:' + bat1_height + 'px; background:' + bat1_color + '; ')
+  document.write('border-radius:19px;"></div>')
+  
+  //bat2
+  document.write('<div id="bat2" style="position:absolute; left:' + bat2_left + 'px; top:' + bat2_top + 'px; ')
+  document.write('width:' + bat2_width + 'px; height:' + bat2_height + 'px; background:' + bat2_color + '; ')
+  document.write(((solo_game) ? 'visibility:hidden; ' : '') + 'border-radius:19px;"></div>')
+  
+  //ball
+  document.write('<div id="ball" style="position:absolute; left:' + ball_left + 'px; top:' + ball_top + 'px; ')
+  document.write('width:' + ball_width + 'px; height:' + ball_height + 'px; background:' + ball_color + '; ')
+  document.write('border-radius: 50%;"></div>')
+  
+  //random_objects
+  for (var i in random_objects){
+    document.write('<div id="random_object_' + i + '" style="position: absolute; top:' + random_objects[i].top)
+    document.write('px; left:' + random_objects[i].left + 'px; width:' + random_objects[i].width + 'px; height:')
+    document.write(random_objects[i].height + 'px; background:' + random_objects[i].background)
+    document.write('; border-radius:1px;"></div>')
+  }
+
+  bat1 = document.getElementById('bat1')
+  if (document.getElementById('bat2')) bat2 = document.getElementById('bat2')
+  ball = document.getElementById('ball')
+  stop = 0
+  ball_direction_y = 'down'
+  ball_distance_x = 0
+  ball_distance_y = 2
+  ball_time = 10
+  bat1_time = 10 //milliseconds
+  bat2_time = 10 //milliseconds
+  initial_bat1_distance = 2
+  initial_bat2_distance = 2
+  bat1_distance = 0
+  bat2_distance = 0
+  isShift = 0
+  left_button1_pressed = 0
+  right_button1_pressed = 0
+  left_button2_pressed = 0
+  right_button2_pressed = 0
+  bat1_moving_left = 0
+  bat1_moving_right = 0
+  bat2_moving_left = 0
+  bat2_moving_right = 0
+  
+  //ball limits
+  bat1_ball_border = Number(bat1.style.top.substr(0, bat1.style.top.length - 2)) + 2
+  if (bat2) bat2_ball_border = Number(bat2.style.top.substr(0, bat2.style.top.length - 2))
+                               + Number(bat2.style.height.substr(0, bat2.style.height.length - 2)) 
+                               - 2
+  ball_border_right = field_left + field_width - ball_width
+  ball_border_left = field_left - 1
+  ball_border_bottom = field_height - ball_height + field_border_width + 1
+  ball_border_top = field_top - 1
+  
+  //bat limits
+  bat_border_left = field_left + field_border_width
+  bat1_border_right = field_left + field_border_width + field_width - bat1_width - 4
+  bat2_border_right = field_left + field_border_width + field_width - bat2_width - 4
+
+  function moveBat1Left() {
+    var bat1_left_pos = Number(bat1.style.left.substr(0, bat1.style.left.length - 2))
+    if (bat1_left_pos > bat_border_left) bat1.style.left = (bat1_left_pos - bat1_distance) + 'px'
+
+    if (bat1_moving_left) bat1_distance += .12
+
+    if (left_button1_pressed && !right_button1_pressed) setTimeout(function () {
+      bat1_moving_left = 1
+      moveBat1Left()
+    }, bat1_time)
+    else bat1_moving_left = 0
+  }
+
+  function moveBat2Left() {
+    var bat2_left_pos = Number(bat2.style.left.substr(0, bat2.style.left.length - 2))
+    if (bat2_left_pos > bat_border_left) bat2.style.left = (bat2_left_pos - bat2_distance) + 'px'
+
+    if (bat2_moving_left) bat2_distance += .12
+
+    if (left_button2_pressed && !right_button2_pressed) setTimeout(function () {
+      bat2_moving_left = 1
+      moveBat2Left()
+    }, bat2_time)
+    else bat2_moving_left = 0
+  }
+
+  function moveBat1Right() {
+    var bat1_left_pos = Number(bat1.style.left.substr(0, bat1.style.left.length - 2))
+    if (bat1_left_pos < bat1_border_right) bat1.style.left = (bat1_left_pos + bat1_distance) + 'px'
+
+    if (bat1_moving_right) bat1_distance += .12
+
+    if (right_button1_pressed && !left_button1_pressed) setTimeout(function () {
+      bat1_moving_right = 1
+      moveBat1Right()
+    }, bat1_time)
+    else bat1_moving_right = 0
+  }
+
+  function moveBat2Right() {
+    var bat2_left_pos = Number(bat2.style.left.substr(0, bat2.style.left.length - 2))
+    if (bat2_left_pos < bat2_border_right) bat2.style.left = (bat2_left_pos + bat2_distance) + 'px'
+
+    if (bat2_moving_right) bat2_distance += .12
+
+    if (right_button2_pressed && !left_button2_pressed) setTimeout(function () {
+      bat2_moving_right = 1
+      moveBat2Right()
+    }, bat1_time)
+    else bat2_moving_right = 0
+  }
+
+  function moveBall() {
+    var ball_top_pos = Number(ball.style.top.substr(0, ball.style.top.length - 2)),
+      ball_left_pos = Number(ball.style.left.substr(0, ball.style.left.length - 2)),
+      ball_left_edge = Number(ball.style.left.substr(0, ball.style.left.length - 2)),
+      ball_right_edge = ball_left_edge + 11,
+      bat1_left_edge = Number(bat1.style.left.substr(0, bat1.style.left.length - 2)),
+      bat1_right_edge = bat1_left_edge + 50,
+      bat2_left_edge = Number(bat2.style.left.substr(0, bat2.style.left.length - 2)),
+      bat2_right_edge = bat2_left_edge + 50
+    
+    //ball direction down
+    if (ball_direction_y == 'down') {
+      //ball hitting bat1
+      //y motion
+      if (ball_right_edge >= bat1_left_edge && ball_left_edge <= bat1_right_edge 
+          && (ball_top_pos + ball_height) >= bat1_ball_border) {
+        ball_direction_y = 'up'
+
+        //x motion
+        var x_var
+
+        if (bat1_moving_left) ball_distance_x -= bat1_distance
+        else if (bat1_moving_right) ball_distance_x += bat1_distance
+
+        if (ball_left_pos > 0 && ball_left_pos < ball_border_right) 
+          ball.style.left = (ball_left_pos + ball_distance_x) + 'px'
+        else ball_distance_x = -ball_distance_x
+      }
+      
+      //ball hitting random object
+      for (var i in random_objects){
+        var random_objects_i_left = Number(
+                                      document.getElementById('random_object_' + i).style.left.substr(
+                                        0, document.getElementById('random_object_' + i).style.left.length-2
+                                      )
+                                    )
+        //y motion
+        if (ball_right_edge >= random_objects_i_left 
+            && ball_left_edge <= random_objects_i_left + random_objects[i].width 
+            && (ball_top_pos + ball_height) >= random_objects[i].top + 2
+            && ball_top_pos < random_objects[i].top) {
+          ball_direction_y = 'up'
+
+          //x motion
+          if (ball_left_pos > 0 && ball_left_pos < ball_border_right) 
+            ball.style.left = (ball_left_pos + ball_distance_x) + 'px'
+          else ball_distance_x = -ball_distance_x
+          
+          if (i == 'c') ball_distance_x += (anim_moving_right) ? anim_distance_x : -anim_distance_x
+        }
+        //x motion only
+        if (((ball_right_edge >= random_objects_i_left 
+              && ball_left_edge < random_objects_i_left && ball_distance_x > 0)
+             || (ball_left_edge <= random_objects_i_left + random_objects[i].width 
+                 && ball_right_edge > random_objects_i_left + random_objects[i].width
+                 && ball_distance_x < 0))
+            && ball_top_pos + ball_height >= random_objects[i].top
+            && ball_top_pos < random_objects[i].top + random_objects[i].height) ball_distance_x = -ball_distance_x
+      }
+
+      if (ball_top_pos < ball_border_bottom) {
+        ball.style.top = (ball_top_pos + ball_distance_y) + 'px'
+        
+        if (ball_left_pos < 0 || ball_left_pos > ball_border_right) ball_distance_x = -ball_distance_x
+        ball.style.left = (ball_left_pos + ball_distance_x) + 'px'
+        
+      } else stop = 1
+      
+      //ball direction up
+    } else {
+      //ball hitting bat2
+      //y motion
+      if (ball_right_edge >= bat2_left_edge && ball_left_edge <= bat2_right_edge 
+          && ball_top_pos < bat2_ball_border && !solo_game) {
+        ball_direction_y = 'down'
+
+        //x motion
+        var x_var
+
+        if (bat2_moving_left) ball_distance_x -= bat2_distance
+        else if (bat2_moving_right) ball_distance_x += bat2_distance
+
+        if (ball_left_pos > 0 && ball_left_pos < ball_border_right) 
+          ball.style.left = (ball_left_pos + ball_distance_x) + 'px'
+        else ball_distance_x = -ball_distance_x
+      }
+      
+      //ball hitting random object
+      for (var i in random_objects){
+        var random_objects_i_left = Number(
+                                      document.getElementById('random_object_' + i).style.left.substr(
+                                        0, document.getElementById('random_object_' + i).style.left.length-2
+                                      )
+                                    )
+        //y motion
+        if (ball_right_edge >= random_objects_i_left 
+            && ball_left_edge <= random_objects_i_left + random_objects[i].width 
+            && ball_top_pos < random_objects[i].top + random_objects[i].height - 2 
+            && ball_top_pos + ball_height > random_objects[i].top + random_objects[i].height) {
+          ball_direction_y = 'down'
+
+          //x motion
+          if (ball_left_pos > 0 && ball_left_pos < ball_border_right) 
+            ball.style.left = (ball_left_pos + ball_distance_x) + 'px'
+          else ball_distance_x = -ball_distance_x
+          
+          if (i == 'c') ball_distance_x += (anim_moving_right) ? anim_distance_x : -anim_distance_x
+        }
+        //x motion only
+        if (((ball_right_edge >= random_objects_i_left 
+              && ball_left_edge < random_objects_i_left && ball_distance_x > 0)
+             || (ball_left_edge <= random_objects_i_left + random_objects[i].width 
+                 && ball_right_edge > random_objects_i_left + random_objects[i].width
+                 && ball_distance_x < 0))
+            && ball_top_pos < random_objects[i].top + random_objects[i].height
+            && ball_top_pos + ball_height > random_objects[i].top) ball_distance_x = -ball_distance_x
+      }
+
+      if (ball_top_pos > ball_border_top) {
+        ball.style.top = (ball_top_pos - ball_distance_y) + 'px'
+        if (ball_left_pos < ball_border_left || ball_left_pos > ball_border_right) {ball_distance_x = -ball_distance_x;}
+        ball.style.left = (ball_left_pos + ball_distance_x) + 'px'
+      } else if (!solo_game) stop = 1
+      else ball_direction_y = 'down'
+    }
+
+    setTimeout(function () {
+      if (!stop) moveBall()
+    }, ball_time)
+  }
+  
+  function restartGame(){
+    ball.style.left = ball_left + 'px'
+    ball.style.top = ball_top + 'px'
+    bat1.style.left = bat1_left + 'px'
+    bat2.style.left = bat2_left + 'px'
+    document.getElementById('random_object_c').style.left = random_objects['c'].left
+    ball_distance_x = 0
+    ball_distance_y = 2
+    bat1_distance = 0
+    bat2_distance = 0
+    ball_direction_y = 'down'
+    stop = 0
+    moveBall()
+  }
+
+  document.onkeydown = function (e) {
+    
+    if (e.keyCode == 16) isShift = 1
+    if (isShift && e.keyCode == 82) restartGame()
+    
+    //f j 70 74
+    if (e.keyCode == 70) {
+      left_button1_pressed = 1
+      if (!right_button1_pressed && !bat1_moving_left) {
+        bat1_distance = initial_bat1_distance
+        moveBat1Left()
+      }
+    }
+
+    if (e.keyCode == 74) {
+      right_button1_pressed = 1
+      if (!left_button1_pressed && !bat1_moving_right) {
+        bat1_distance = initial_bat1_distance
+        moveBat1Right()
+      }
+    }
+
+    //z x 90 88
+    if (e.keyCode == 90) {
+      left_button2_pressed = 1
+      if (!right_button2_pressed && !bat2_moving_left) {
+        bat2_distance = initial_bat2_distance
+        moveBat2Left()
+      }
+    }
+
+    if (e.keyCode == 88) {
+      right_button2_pressed = 1
+      if (!left_button2_pressed && !bat2_moving_right) {
+        bat2_distance = initial_bat2_distance
+        moveBat2Right()
+      }
+    }
+  }
+  document.onkeyup = function (e) {
+    if (e.keyCode == 16) isShift = 0
+    if (e.keyCode == 70) left_button1_pressed = 0
+    if (e.keyCode == 74) right_button1_pressed = 0
+    if (e.keyCode == 90) left_button2_pressed = 0
+    if (e.keyCode == 88) right_button2_pressed = 0
+  }
+  
+  //animation
+  anim_el_left_original = random_objects['c'].left
+  anim_total_distance_x = 200
+  anim_distance_x = anim_total_distance_x/200
+  anim_moving_right = 1
+  anim_time = 10
+  
+  function animate_random_object(){
+    var el = document.getElementById('random_object_c'),
+        el_left = Number(el.style.left.substr(0, el.style.left.length - 2))
+    
+    if (el_left < anim_el_left_original || el_left > anim_el_left_original + anim_total_distance_x) 
+      anim_moving_right = (anim_moving_right) ? 0 : 1
+    el.style.left = el_left + (anim_moving_right ? anim_distance_x : -anim_distance_x) + 'px'
+  }
+
+  setInterval(function(){
+    animate_random_object()
+  }, anim_time)
+  
+  moveBall()
+</script>

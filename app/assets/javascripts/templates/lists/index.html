@@ -1,0 +1,5 @@
+<h3>My Lists</h3>
+<p>&nbsp;</p>
+<h4 ng-repeat="list in ctrl.lists track by list.id">
+  <a ui-sref="lists.show({id: {{ list.id }} })">{{ list.name }}</a>
+</h4>

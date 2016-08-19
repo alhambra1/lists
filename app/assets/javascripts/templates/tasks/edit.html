@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Edit Task</h4>
+  </div>
+  <div class="panel-body">
+    <form name="form" ng-submit="ctrl.updateTask()">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" ng-model="ctrl.task.name" required="required" />
+        <div ng-messages="form.name.$error">
+          <div class="alert alert-warning" ng-message="required" ng-if="form.name.$touched">Please enter a name for the task.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" ng-model="ctrl.task.description"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Due Date</label>
+        <input type="date" name="dueDate" class="form-control" ng-model="ctrl.task.dueDate" required="required" />
+        <div ng-messages="form.dueDate.$error">
+          <div class="alert alert-warning" ng-message="date" ng-if="form.dueDate.$touched">Please enter a valid date.</div>
+          <div class="alert alert-warning" ng-message="required" ng-if="form.dueDate.$touched">Please enter the task's due date.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <input type="text" class="form-control" ng-model="ctrl.task.status" />
+      </div>
+      <br>
+      <h5>Task Tags</h5>
+      <div ng-show="task.allTags.length === 0">
+        There are no tags.
+      </div>
+      <span ng-repeat="tag in ctrl.allTags">
+        <input type="checkbox" ng-model="ctrl.task.tagIdsObj[tag.id]" /> {{ tag.name }}&nbsp;
+      </span>
+      <br><br>
+      <div class="form-group">
+        <label>New Tag</label>
+        <input type="text" class="form-control" ng-model="ctrl.task.tags_attributes['0'].name" />
+      </div>
+      <input type="submit" id="submit" value="Update" class="btn btn-primary" /> <span style="margin-left:20px;" class="alert alert-info" ng-show="ctrl.message">{{ ctrl.message }}</span>
+    </form>
+  </div>
+</div>

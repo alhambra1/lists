@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Search</h4>
+  </div>
+  <div class="panel-body">
+    <form name="form" ng-submit="ctrl.search()">
+      <div class="form-group">
+        <label>List Id (optional)</label>
+        <input type="text" class="form-control" ng-model="ctrl.formData.search.list_id" />
+      </div>
+      <div class="form-group">
+        <label>Query</label>
+        <input type="text" name="query" class="form-control" ng-model="ctrl.formData.search.query" required="required" />
+        <div ng-messages="form.query.$error"> 
+          <div class="alert alert-warning" ng-message="required" ng-if="form.query.$touched">Please enter a search term.</div>
+        </div>
+      </div>
+      <input type="submit" id="submit" value="Search" class="btn btn-primary" />
+    </form>
+  </div>
+</div>
+
+<p>&nbsp;</p>
+
+<h4>Results</h4>
+
+<p>&nbsp;</p>
+
+<div ng-if="ctrl.results.length === 0">There were no matches.</div>
+
+<div ng-repeat="task in ctrl.results">
+  <a ui-sref="lists.task({listId: {{ task.listId }}, taskId: {{ task.id }} })">{{ task.name }}</a>
+  <hr>
+</div>

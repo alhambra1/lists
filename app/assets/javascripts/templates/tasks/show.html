@@ -1,0 +1,21 @@
+<p><a ui-sref="lists.show({id: {{ ctrl.task.listId }} })">Back to list</a></p>
+
+<h3>{{ ctrl.task.name }}</h3>
+
+<h5>{{ ctrl.task.description }}</h5>
+
+<p>&nbsp;</p>
+
+<h6>Due: {{ ctrl.task.displayDueDate() }}</h6>
+
+<h6>Status: {{ ctrl.task.status }}</h6>
+
+<p><a ui-sref="tasks.edit({id: {{ ctrl.task.id }} })">Edit</a></p>
+
+<p><a href="" ng-click="ctrl.deleteTask()">Delete</a></p>
+
+<p>&nbsp;</p>
+
+<h5>Tags</h5>
+
+{{ ctrl.task.tagNames() }}
