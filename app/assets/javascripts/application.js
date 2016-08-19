@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 //= require angular-app/angular
 //= require angular-app/angular-ui-router
 //= require angular-app/angular-messages
