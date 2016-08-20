@@ -10,19 +10,19 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= requite boostrap_sprockets
-//= require angular-app/angular
-//= require angular-app/angular-ui-router
-//= require angular-app/angular-messages
-//= require angular-app/angular-animate
-//= require angular-rails-templates
-//= require_tree ./templates
-//= require angular-app/app/app
-//= require_tree ./angular-app/app/components
-//= require_tree ./angular-app/app/controllers
-//= require_tree ./angular-app/app/directives
-//= require_tree ./angular-app/app/factories
-//= require_tree ./angular-app/app/models
-//= require_tree ./angular-app/app/services
+// require jquery
+// require jquery_ujs
+// requite boostrap_sprockets
+// require angular-app/angular
+// require angular-app/angular-ui-router
+// require angular-app/angular-messages
+// require angular-app/angular-animate
+// require angular-rails-templates
+// require_tree ../templates
+// require angular-app/app/app
+// require_tree ./angular-app/app/components
+// require_tree ./angular-app/app/controllers
+// require_tree ./angular-app/app/directives
+// require_tree ./angular-app/app/factories
+// require_tree ./angular-app/app/models
+// require_tree ./angular-app/app/services
