@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
 
   before_action :require_login
 
-  protect_from_forgery with: :exception
+#  disable protect_from_forgery for separate Rails API / Angular app
+#  protect_from_forgery with: :exception
 
   after_filter :set_csrf_cookie_for_ng
 

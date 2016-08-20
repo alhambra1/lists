@@ -1,5 +1,5 @@
 var NavBar = {
-  templateUrl: 'layouts/_nav.html'
+  templateUrl: 'templates/layouts/_nav.html'
 }
 
 angular

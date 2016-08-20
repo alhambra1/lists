@@ -40,8 +40,6 @@ group :development, :test, :production do
   gem 'byebug', platform: :mri
 
   gem 'bcrypt'
-  gem 'angular-rails-templates'
-  gem 'bootstrap-sass'
   gem 'dotenv-rails'
   gem 'active_model_serializers'
 end

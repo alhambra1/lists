@@ -1,6 +1,6 @@
 var SingleCenter = {
   transclude: true,
-  templateUrl: 'layouts/_single_center.html'
+  templateUrl: 'templates/layouts/_single_center.html'
 }
 
 angular

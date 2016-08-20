@@ -1,5 +1,5 @@
 angular
-  .module('app',['ui.router','templates','ngMessages','ngAnimate'])
+  .module('app',['ui.router','ngMessages','ngAnimate'])
   .config(['$stateProvider', '$urlRouterProvider',function($stateProvider,$urlRouterProvider){
     $stateProvider
 
@@ -11,7 +11,7 @@ angular
       })
       .state('lists.index',{
         url: '/lists',
-        templateUrl: 'lists/index.html',
+        templateUrl: 'templates/lists/index.html',
         controller: 'ListsIndexController as ctrl',
         resolve: {
           lists: function(ListService,$state){
@@ -36,7 +36,7 @@ angular
       .state('lists.new',{
         url: '/lists/new',
         controller: 'ListsCrudController as ctrl',
-        templateUrl: 'lists/_form.html',
+        templateUrl: 'templates/lists/_form.html',
         resolve: {
           list: function(ListService){
             return {};
@@ -46,7 +46,7 @@ angular
       .state('lists.show',{
         url: '/lists/:id',
         controller: 'ListsShowController as ctrl',
-        templateUrl: 'lists/show.html',
+        templateUrl: 'templates/lists/show.html',
         resolve: {
           list: function($stateParams,ListService,$state){
             return ListService.getList($stateParams.id).then(function(resp){
@@ -70,7 +70,7 @@ angular
       .state('lists.edit',{
         url: '/lists/:id/edit',
         controller: 'ListsCrudController as ctrl',
-        templateUrl: 'lists/_form.html',
+        templateUrl: 'templates/lists/_form.html',
         resolve: {
           list: function($stateParams,ListService,$state){
             return ListService.getList($stateParams.id).then(function(resp){
@@ -96,7 +96,7 @@ angular
 
       .state('lists.task',{
         url: '/lists/:listId/tasks/:taskId',
-        templateUrl: 'tasks/show.html',
+        templateUrl: 'templates/tasks/show.html',
         controller: 'TasksShowController as ctrl',
         resolve: {
           task: function($stateParams,TaskService,$state){
@@ -126,7 +126,7 @@ angular
       .state('tasks.edit',{
         url: '/tasks/:id/edit',
         controller: 'TasksCrudController as ctrl',
-        templateUrl: 'tasks/edit.html',
+        templateUrl: 'templates/tasks/edit.html',
         resolve: {
           task: function($stateParams,TaskService,$state){
             return TaskService.getTaskEdit($stateParams.id).then(function(resp){
@@ -152,14 +152,14 @@ angular
 
       .state('search',{
         url: '/search',
-        templateUrl: 'search/index.html',
+        templateUrl: 'templates/search/index.html',
         controller: 'SearchController as ctrl'
       })
 
     ///////* USERS *///////
       .state('users',{
         url: '/accounts/myAccount',
-        templateUrl: 'users/index.html',
+        templateUrl: 'templates/users/index.html',
         controller: 'UsersController as ctrl',
         resolve: {
           userInfo: function(SessionService,$state){
@@ -191,14 +191,14 @@ angular
       })
       .state('sessions.new',{
         url: '/login',
-        templateUrl: 'sessions/new.html',
+        templateUrl: 'templates/sessions/new.html',
         controller: 'SessionsController as ctrl'
       })
 
   ///////* GAMES *///////
       .state('game',{
         url: '/games/game',
-        templateUrl: 'games/game.html'
+        templateUrl: 'templates/games/game.html'
       })
 
     $urlRouterProvider.otherwise('/lists');
