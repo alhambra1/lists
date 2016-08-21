@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20160803154438) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "lists", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -29,8 +32,8 @@ ActiveRecord::Schema.define(version: 20160803154438) do
     t.integer  "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tag_id"], name: "index_task_tags_on_tag_id"
-    t.index ["task_id"], name: "index_task_tags_on_task_id"
+    t.index ["tag_id"], name: "index_task_tags_on_tag_id", using: :btree
+    t.index ["task_id"], name: "index_task_tags_on_task_id", using: :btree
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -41,7 +44,7 @@ ActiveRecord::Schema.define(version: 20160803154438) do
     t.integer  "list_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["list_id"], name: "index_tasks_on_list_id"
+    t.index ["list_id"], name: "index_tasks_on_list_id", using: :btree
   end
 
   create_table "user_lists", force: :cascade do |t|
@@ -50,16 +53,21 @@ ActiveRecord::Schema.define(version: 20160803154438) do
     t.string   "permission"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["list_id"], name: "index_user_lists_on_list_id"
-    t.index ["user_id"], name: "index_user_lists_on_user_id"
+    t.index ["list_id"], name: "index_user_lists_on_list_id", using: :btree
+    t.index ["user_id"], name: "index_user_lists_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email"
+    t.string   "username"
     t.string   "password_digest"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "role",            default: 0
   end
 
+  add_foreign_key "task_tags", "tags"
+  add_foreign_key "task_tags", "tasks"
+  add_foreign_key "tasks", "lists"
+  add_foreign_key "user_lists", "lists"
+  add_foreign_key "user_lists", "users"
 end

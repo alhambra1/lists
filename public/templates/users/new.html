@@ -1,14 +1,15 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Sign In</h4>
+    <h4>Sign Up</h4>
   </div>
   <div class="panel-body">
-    <form name="form" ng-submit="ctrl.login()">
+    <form name="form" ng-submit="">
       <div class="form-group">
         <label>Username</label>
-        <input type="text" name="username" class="form-control" ng-model="ctrl.user.username" required="required" />
+        <input type="text" name="username" class="form-control" ng-model="ctrl.user.username" required="required" minlength=4 maxlength=4 />
         <div ng-messages="form.username.$error">
           <div class="alert alert-warning" ng-message="required" ng-if="form.email.$touched">Please enter a username.</div>
+          <div class="alert alert-warning" ng-message="minlength" ng-if="form.email.$touched">The username can be 4 to 8 characters long.</div>
         </div>
       </div>
       <div class="form-group">
@@ -18,6 +19,6 @@
           <div class="alert alert-warning" ng-message="required" ng-if="form.password.$touched">Please enter a password.</div>
         </div>
       </div>
-      <input type="submit" id="submit" value="Sign In" class="btn btn-primary" />
+      <input type="submit" id="submit" value="Sign Up" class="btn btn-primary" />
   </div>
 </div>

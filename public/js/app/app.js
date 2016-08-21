@@ -158,8 +158,23 @@ angular
 
     ///////* USERS *///////
       .state('users',{
-        url: '/accounts/myAccount',
-        templateUrl: 'templates/users/index.html',
+        abstract: true,
+        url: '',
+        template: '<div ui-view></div>'
+      })
+      .state('users.new',{
+        url: '/signup',
+        templateUrl: 'templates/users/new.html',
+        controller: 'UsersController as ctrl',
+        resolve: {
+          userInfo: function(){
+            return {};
+          }
+        }
+      })
+      .state('users.index',{
+        url: '/users/myAccount',
+        templateUrl: 'templates/users/show.html',
         controller: 'UsersController as ctrl',
         resolve: {
           userInfo: function(SessionService,$state){
@@ -211,8 +226,8 @@ angular
 
       $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
 
-          var isLogin = toState.name === "sessions.new";
-          if(isLogin){
+          var isLoginOrSignup = (toState.name === "sessions.new" || toState.name === "users.new");
+          if(isLoginOrSignup){
             return; // no need to redirect 
           }
 

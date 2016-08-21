@@ -2,8 +2,8 @@ class SessionsController < ApplicationController
   before_filter :require_login, :except => [:create]
 
   def create
-    user = User.find_by(email: params[:email]) 
-    error_message = "Email and/or password do not match our records."
+    user = User.find_by(username: params[:username]) 
+    error_message = "Username and/or password do not match our records."
     if user and user.authenticate(params[:password])
       session[:user_id] = user.id
       render json: user
