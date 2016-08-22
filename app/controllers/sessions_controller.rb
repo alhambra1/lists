@@ -2,11 +2,11 @@ class SessionsController < ApplicationController
   before_filter :require_login, :except => [:create]
 
   def create
-    user = User.find_by(username: params[:username]) 
+    user = User.find_by(username: user_params[:username]) 
     error_message = "Username and/or password do not match our records."
-    if user and user.authenticate(params[:password])
+    if user and user.authenticate(user_params[:password])
       session[:user_id] = user.id
-      render json: user
+      render json: user, status: 200
     else
       render json: {error: error_message}
     end
@@ -19,5 +19,11 @@ class SessionsController < ApplicationController
   def destroy
     session.clear
     render plain: "Logout successful."
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:username,:password)
   end
 end

@@ -1,7 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :list
-  has_many :task_tags
-  has_many :tags, through: :task_tags
+  has_many :task_tags, dependent: :nullify
+  has_many :tags, through: :task_tags, dependent: :nullify
 
   def tags_attributes=(tag_attributes)
     tag = Tag.find_or_create_by(tag_attributes.values[0]) if tag_attributes.values[0]["name"].match(/[a-zA-Z]/)

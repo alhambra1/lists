@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'sessions/user', to: 'sessions#user'
   delete 'sessions', to: 'sessions#destroy'
 
-  resources :users, only: [:show]
+  resources :users, only: [:create]
 
   resources :lists
 

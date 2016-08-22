@@ -1,10 +1,10 @@
 function ListService($http){
   this.getLists = function(){
-    return $http.get('/lists.json');
+    return $http.get('/lists');
   }
 
   this.getList = function(id){
-    return $http.get('/lists/' + id + '.json');
+    return $http.get('/lists/' + id);
   }
 
   this.postList = function(list_hash){

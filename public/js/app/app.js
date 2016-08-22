@@ -172,7 +172,7 @@ angular
           }
         }
       })
-      .state('users.index',{
+      .state('users.show',{
         url: '/users/myAccount',
         templateUrl: 'templates/users/show.html',
         controller: 'UsersController as ctrl',
@@ -225,7 +225,6 @@ angular
   .run(function($rootScope, $location, $state, $window, Auth) {
 
       $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
-
           var isLoginOrSignup = (toState.name === "sessions.new" || toState.name === "users.new");
           if(isLoginOrSignup){
             return; // no need to redirect 

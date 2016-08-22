@@ -2,7 +2,7 @@ function SessionsController(SessionService,Auth,$state,$window){
   var ctrl = this;
 
   ctrl.login = function(){
-    SessionService.authenticateUser(ctrl.user).then(function(resp){
+    SessionService.authenticateUser({ user: ctrl.user }).then(function(resp){
       if (resp.data.error){
         return alert(resp.data.error);
 
