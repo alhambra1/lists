@@ -1,6 +1,9 @@
 function UsersController(userInfo,SessionService,UserService,Auth,$state,$window){
   var ctrl = this;
 
+  ctrl.showform = false;
+  ctrl.toggleForm = function(){ ctrl.showForm = ctrl.showForm ? false : true };
+
   ctrl.user = new User(userInfo);
 
   ctrl.logout = function(){
@@ -28,6 +31,28 @@ function UsersController(userInfo,SessionService,UserService,Auth,$state,$window
         $window.localStorage.loggedIn = true;
 
         $state.go('lists.index');
+      }
+    });
+  };
+
+  ctrl.updateUser = function(){
+    UserService.updateUser({
+      current_password: ctrl.currentPassword,
+      user: ctrl.user 
+    }).then(function(resp){
+      if (resp.data.error){
+        var errorStr = '';
+
+        for (let i in resp.data.error){
+          errorStr += i + ': ' + resp.data.error[i] + '\n';
+        }
+
+        return alert(errorStr);
+        
+      } else {
+        Auth.setUser(resp.data);
+
+        return alert("Information updated.");
       }
     });
   };
