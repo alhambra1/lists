@@ -7,8 +7,6 @@ function ListsShowController(list,TaskService,$filter,$scope,$timeout){
   ctrl.list = new List(list);
   ctrl.allTags = list.all_tags;
 
-  ctrl.list.tasks = ctrl.list.tasks.map(x => new Task(x));
-
   ctrl.refilterTasks = function(){
     ctrl.list.filteredTasks = $filter('filter')(ctrl.list.tasks,ctrl.search);
   }
@@ -38,7 +36,7 @@ function ListsShowController(list,TaskService,$filter,$scope,$timeout){
 
         // render new tag
         if (ctrl.task.tags_attributes && ctrl.task.tags_attributes['0'].name.match(/\S/)){
-          ctrl.allTags.push(resp.data.tags.splice(-1)[0]);
+          ctrl.allTags.push(resp.data.tags.slice(-1)[0]);
         }
 
         // clear form

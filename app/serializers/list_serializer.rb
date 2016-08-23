@@ -5,7 +5,6 @@ class ListSerializer < ActiveModel::Serializer
   has_many :tasks, serializer: ListTaskSerializer
 
   def editable
-    true
     authorize_resource(current_user,object,:edit)
   end
 
