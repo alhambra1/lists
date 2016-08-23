@@ -1,6 +1,9 @@
 function ListsShowController(list,TaskService,$filter,$scope,$timeout){
   var ctrl = this;
 
+  ctrl.showform = false;
+  ctrl.toggleForm = function(){ ctrl.showForm = ctrl.showForm ? false : true };
+
   ctrl.list = new List(list);
   ctrl.allTags = list.all_tags;
 
@@ -45,7 +48,8 @@ function ListsShowController(list,TaskService,$filter,$scope,$timeout){
           $scope.form.$setPristine();
           $scope.form.$setUntouched();
           $scope.form.$submitted = false;
-        });   
+          ctrl.showForm = false;
+        }, 50);
       }
     });
   }

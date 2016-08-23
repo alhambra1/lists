@@ -29,14 +29,13 @@ Search: <input type="text" ng-model="ctrl.search" ng-change="ctrl.refilterTasks(
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4>Add Task</h4>
-  </div>
+<button class="btn btn-primary" ng-click="ctrl.toggleForm()">Add Task</button>
+
+<div class="panel panel-default" ng-show="ctrl.showForm">
   <div class="panel-body">
     <form name="form" ng-submit="ctrl.addTask()">
       <div class="form-group">
-        <label>Name</label>
+        <label>Task Name</label>
         <input type="text" name="name" class="form-control" ng-model="ctrl.task.name" required="required" />
         <div ng-messages="form.name.$error">
           <div class="alert alert-warning" ng-message="required" ng-if="form.name.$touched">Please enter a name for the task.</div>

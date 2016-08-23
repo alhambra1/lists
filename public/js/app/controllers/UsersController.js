@@ -1,4 +1,4 @@
-function UsersController(userInfo,SessionService,UserService,Auth,$state,$window){
+function UsersController(userInfo,SessionService,UserService,Auth,$state,$window,$scope,$timeout){
   var ctrl = this;
 
   ctrl.showform = false;
@@ -52,6 +52,13 @@ function UsersController(userInfo,SessionService,UserService,Auth,$state,$window
       } else {
         Auth.setUser(resp.data);
 
+        $timeout(function() {
+          $scope.form.$setPristine();
+          $scope.form.$setUntouched();
+          $scope.form.$submitted = false;
+          ctrl.showForm = false;
+        }, 50);
+        
         return alert("Information updated.");
       }
     });
