@@ -22,9 +22,5 @@
 
 <p>&nbsp;</p>
 <div ng-if="ctrl.list.id !== undefined">
-  <a href="" ng-click="ctrl.deleteList()">Delete</a>
-
-  <p>&nbsp;</p>
-
-  <a ui-sref="lists.show({ id: {{ ctrl.list.id }} })">Back to list</a>
+  <p class="glyph-link"><a ui-sref="lists.show({ id: {{ ctrl.list.id }} })"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a> | <a href="" ng-click="ctrl.deleteList()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></p>
 </div>

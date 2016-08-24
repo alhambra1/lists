@@ -1,4 +1,4 @@
-<p><a ui-sref="lists.show({id: {{ ctrl.task.listId }} })">Back to list</a></p>
+<p><a class="glyph-link" ui-sref="lists.show({id: {{ ctrl.task.listId }} })"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a></p>
 
 <h3>{{ ctrl.task.name }}</h3>
 
@@ -10,12 +10,12 @@
 
 <h6>Status: {{ ctrl.task.status }}</h6>
 
-<p><a ui-sref="tasks.edit({id: {{ ctrl.task.id }} })">Edit</a></p>
-
-<p><a href="" ng-click="ctrl.deleteTask()">Delete</a></p>
-
 <p>&nbsp;</p>
 
 <h5>Tags</h5>
 
 {{ ctrl.task.tagNames() }}
+
+<p>&nbsp;</p>
+
+<p><a class="glyph-link" ui-sref="tasks.edit({id: {{ ctrl.task.id }} })"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> | <a href="" ng-click="ctrl.deleteTask()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></p>
