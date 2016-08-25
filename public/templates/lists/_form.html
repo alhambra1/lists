@@ -20,7 +20,6 @@
   </div>
 </div>
 
-<p>&nbsp;</p>
-<div ng-if="ctrl.list.id !== undefined">
+<div id="lists-form-buttons" ng-if="ctrl.list.id !== undefined">
   <p class="glyph-link"><a class="btn btn-primary" ui-sref="lists.show({ id: {{ ctrl.list.id }} })"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a> <a class="btn btn-primary" href="" ng-click="ctrl.deleteList()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></p>
 </div>

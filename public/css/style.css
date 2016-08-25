@@ -5,13 +5,38 @@
 }
 
 
+/********** LISTS INDEX **********/
+
+#lists-index-h3 {
+  margin-bottom: 30px;
+}
+
+
 /********** LISTS SHOW **********/
 
-#lists-show-collaborators, #lists-show-filter, #lists-show-no-tasks {
-  margin-bottom: 10px;
+#lists-show-collaborators {
+  margin-bottom: 30px;
+}
+
+#lists-show-filter, #lists-show-no-tasks {
+  margin-bottom: 20px;
 }
 
 #lists-show-add-task-button {
+  margin-bottom: 5px;
+}
+
+
+/********** LISTS FORM **********/
+
+#lists-form-buttons {
+  margin-top: 20px;
+}
+
+
+/********** USERS SHOW **********/
+
+#users-show-edit-settings-button {
   margin-bottom: 5px;
 }
 
