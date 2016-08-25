@@ -16,6 +16,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li ng-if="ctrl.loggedIn"><a ui-sref="users.show">Account</a></li>
+        <li ng-if="ctrl.loggedIn"><a href="" ng-click="ctrl.logout()">Logout</a></li>
       </ul>
 
     </div><!-- /.navbar-collapse -->

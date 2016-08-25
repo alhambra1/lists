@@ -1,3 +1,16 @@
+/********** THEME AMENDMENTS **********/
+
+.panel {
+  max-width: 500px;
+}
+
+
+/********** MISC **********/
+
 .glyph-link {
   font-size: 1.2em;
+}
+
+.float-right {
+  float:right;
 }

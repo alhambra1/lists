@@ -1,11 +1,26 @@
-function NavController($scope,$window){
+function NavController($scope,$window,SessionService,Auth,$state){
   var ctrl = this;
-ctrl.loggedIn = true;
+
+  ctrl.loggedIn = !!$window.localStorage.loggedIn;
+
   $scope.$watch(function () { return $window.localStorage.loggedIn; },function(newVal,oldVal){
     if (oldVal !== newVal){
-    	ctrl.loggedIn = true;
+    	ctrl.loggedIn = !!newVal;
     }
   })
+
+  ctrl.logout = function(){
+    SessionService.endSession().then(function(resp){
+      if (!resp.data.match('successful')){
+        alert("An error occurred processing the request.\nSigning out locally.");
+      }
+
+      Auth.unsetUser();
+      delete $window.localStorage.loggedIn;
+
+      $state.go('sessions.new');
+    });
+  };
 }
 
 angular
