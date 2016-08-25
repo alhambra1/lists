@@ -1,4 +1,3 @@
-<p><a class="glyph-link" ui-sref="lists.show({id: {{ ctrl.task.listId }} })"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a></p>
 
 <h3>{{ ctrl.task.name }}</h3>
 
@@ -18,4 +17,4 @@
 
 <p>&nbsp;</p>
 
-<p><a class="glyph-link" ui-sref="tasks.edit({id: {{ ctrl.task.id }} })"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> | <a href="" ng-click="ctrl.deleteTask()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></p>
+<p class="glyph-link"><a class="btn btn-primary" ui-sref="lists.show({id: {{ ctrl.task.listId }} })"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a> <a class="btn btn-primary" ui-sref="tasks.edit({id: {{ ctrl.task.id }} })"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> <a class="btn btn-primary" href="" ng-click="ctrl.deleteTask()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></p>
