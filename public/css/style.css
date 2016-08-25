@@ -4,6 +4,11 @@
   max-width: 500px;
 }
 
+/********** LISTS SHOW **********/
+
+#list-show-no-tasks {
+  margin-bottom: 10px;
+}
 
 /********** MISC **********/
 
