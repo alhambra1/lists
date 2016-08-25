@@ -5,17 +5,15 @@
 <p>&nbsp;</p>
 
 <h5>Collaborators</h5>
-<p>{{ ctrl.list.collaborators }}</p>
+<div id="lists-show-collaborators">{{ ctrl.list.collaborators }}</div>
 
-<p>&nbsp;</p>
 <h4>Tasks</h4>
 
-<p>&nbsp;</p>
-Filter: <input type="text" ng-model="ctrl.search" ng-change="ctrl.refilterTasks()" />
-<p>&nbsp;</p>
 <hr>
 
-<div id="list-show-no-tasks" ng-show="ctrl.list.tasks.length === 0">
+<div id="lists-show-filter">Filter: <input type="text" ng-model="ctrl.search" ng-change="ctrl.refilterTasks()" /></div>
+
+<div id="lists-show-no-tasks" ng-show="ctrl.list.tasks.length === 0">
   There are no tasks in this list.
 </div>
 
@@ -27,7 +25,7 @@ Filter: <input type="text" ng-model="ctrl.search" ng-change="ctrl.refilterTasks(
   <hr >
 </div>
 
-<button class="btn btn-primary" href="" ng-click="ctrl.toggleForm()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span></button>
+<button id="lists-show-add-task-button" class="btn btn-primary" href="" ng-click="ctrl.toggleForm()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span></button>
 
 <div class="panel panel-default" ng-show="ctrl.showForm">
   <div class="panel-body">

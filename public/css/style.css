@@ -4,11 +4,17 @@
   max-width: 500px;
 }
 
+
 /********** LISTS SHOW **********/
 
-#list-show-no-tasks {
+#lists-show-collaborators, #lists-show-filter, #lists-show-no-tasks {
   margin-bottom: 10px;
 }
+
+#lists-show-add-task-button {
+  margin-bottom: 5px;
+}
+
 
 /********** MISC **********/
 
