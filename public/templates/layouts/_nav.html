@@ -11,11 +11,11 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
       <ul class="nav navbar-nav">
-        <li><a ui-sref="lists.new">New List</a></li>
-        <li><a href="/#/search">Search</a></li>
+        <li ng-if="ctrl.loggedIn"><a ui-sref="lists.new">New List</a></li>
+        <li ng-if="ctrl.loggedIn"><a href="/#/search">Search</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a ui-sref="users.show">Account</a></li>
+        <li ng-if="ctrl.loggedIn"><a ui-sref="users.show">Account</a></li>
       </ul>
 
     </div><!-- /.navbar-collapse -->

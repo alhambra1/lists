@@ -1,5 +1,7 @@
 var NavBar = {
-  templateUrl: 'templates/layouts/_nav.html'
+  templateUrl: 'templates/layouts/_nav.html',
+  controller: 'NavController',
+  controllerAs: 'ctrl'
 }
 
 angular
