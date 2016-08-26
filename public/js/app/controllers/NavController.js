@@ -1,11 +1,11 @@
 function NavController($scope,$window,SessionService,Auth,$state){
   var ctrl = this;
 
-  ctrl.loggedIn = !!$window.localStorage.loggedIn;
+  ctrl.loggedIn = !!$window.localStorage.loggedIn || !!Auth.isLoggedIn();
 
-  $scope.$watch(function () { return $window.localStorage.loggedIn; },function(newVal,oldVal){
+  $scope.$watch(function () { return !!$window.localStorage.loggedIn || !!Auth.isLoggedIn(); },function(newVal,oldVal){
     if (oldVal !== newVal){
-    	ctrl.loggedIn = !!newVal;
+    	ctrl.loggedIn = newVal;
     }
   })
 
