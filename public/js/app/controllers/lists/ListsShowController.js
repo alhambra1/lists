@@ -21,7 +21,7 @@ function ListsShowController(list,TaskService,$filter,$scope,$timeout){
 
     ctrl.task.tag_ids = [];
 
-    for (let i in ctrl.task.tagIdsObj){
+    for (var i in ctrl.task.tagIdsObj){
       if (ctrl.task.tagIdsObj[i]) {
         ctrl.task.tag_ids.push(parseInt(i));
       }

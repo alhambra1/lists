@@ -11,7 +11,7 @@ function SearchController(SearchService){
         alert("An error occurred: " + resp.data.error);
 
       } else {
-        ctrl.results = resp.data.map(x => new Task(x));
+        ctrl.results = resp.data.map(function(x){ return new Task(x); });
       }
     });
   }

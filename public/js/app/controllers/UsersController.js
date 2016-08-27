@@ -43,7 +43,7 @@ function UsersController(userInfo,SessionService,UserService,Auth,$state,$window
       if (resp.data.error){
         var errorStr = '';
 
-        for (let i in resp.data.error){
+        for (var i in resp.data.error){
           errorStr += i + ': ' + resp.data.error[i] + '\n';
         }
 

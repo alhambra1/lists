@@ -6,7 +6,7 @@ function TasksCrudController(task,TaskService,$state,$timeout){
   ctrl.allTags = task.all_tags;
   ctrl.task.tagIdsObj = {};
 
-  for (let i in ctrl.allTags){
+  for (var i in ctrl.allTags){
     if (ctrl.task.tags.indexOf(ctrl.allTags[i].id) !== -1){
       ctrl.task.tagIdsObj[ctrl.allTags[i].id] = true;
     }

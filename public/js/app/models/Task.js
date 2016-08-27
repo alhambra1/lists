@@ -15,6 +15,6 @@ var Task = function(task_hash){
   }
 
   this.tagNames = function(){
-    return this.tags.map(x => x.name).join(", ");
+    return this.tags.map(function(x){ return x.name; }).join(", ");
   }
 };
