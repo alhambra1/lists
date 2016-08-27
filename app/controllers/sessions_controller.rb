@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   before_filter :require_login, :except => [:create]
 
   def create
-    user = User.find_by(username: user_params[:username]) 
+    user = User.where("username ILIKE ?", user_params[:username]).first
     error_message = "Username and/or password do not match our records."
     if user and user.authenticate(user_params[:password])
       session[:user_id] = user.id
