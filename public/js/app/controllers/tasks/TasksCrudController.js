@@ -25,7 +25,7 @@ function TasksCrudController(task,TaskService,$state,$timeout){
 
     ctrl.formData.task.tag_ids = [];
 
-    for (let i in ctrl.task.tagIdsObj){
+    for (var i in ctrl.task.tagIdsObj){
       if (ctrl.task.tagIdsObj[i]) {
         ctrl.formData.task.tag_ids.push(parseInt(i));
       }
