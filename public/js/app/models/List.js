@@ -8,8 +8,8 @@ var List = function(list_hash){
 
   this.collaboratorsWithoutCreator = function(){
     return this.collaborators.split(',')
-                             .filter(x => !x.match('creator'))
-                             .map(x => x.replace(/^\s+|\s+$/,""))
+                             .filter(function(x){ return !x.match('creator'); })
+                             .map(function(x){ return x.replace(/^\s+|\s+$/,""); })
                              .join(',');
   };
 }
