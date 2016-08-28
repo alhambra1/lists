@@ -1,10 +1,10 @@
-function UsersController(userInfo,SessionService,UserService,Auth,$state,$window,$scope,$timeout){
+function UsersController(SessionService,UserService,Auth,$state,$scope,$timeout){
   var ctrl = this;
 
   ctrl.showform = false;
   ctrl.toggleForm = function(){ ctrl.showForm = ctrl.showForm ? false : true };
 
-  ctrl.user = new User(userInfo);
+  ctrl.user = Auth.isLoggedIn();
 
   ctrl.logout = function(){
     SessionService.endSession().then(function(resp){
@@ -13,7 +13,6 @@ function UsersController(userInfo,SessionService,UserService,Auth,$state,$window
       }
 
       Auth.unsetUser();
-      delete $window.localStorage.loggedIn;
 
       $state.go('sessions.new');
     });
@@ -26,9 +25,6 @@ function UsersController(userInfo,SessionService,UserService,Auth,$state,$window
         
       } else {
         Auth.setUser(resp.data);
-
-        // set local flag to keep local permission on browser refresh and accros browser tabs.
-        $window.localStorage.loggedIn = true;
 
         $state.go('lists.index');
       }
