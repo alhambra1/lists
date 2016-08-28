@@ -1,9 +1,9 @@
-function NavController($scope,$window,SessionService,Auth,$state){
+function NavController($scope,SessionService,Auth,$state){
   var ctrl = this;
 
-  ctrl.loggedIn = !!$window.localStorage.loggedIn || !!Auth.isLoggedIn();
+  ctrl.loggedIn = !!Auth.isLoggedIn();
 
-  $scope.$watch(function () { return !!$window.localStorage.loggedIn || !!Auth.isLoggedIn(); },function(newVal,oldVal){
+  $scope.$watch(function () { return !!Auth.isLoggedIn(); },function(newVal,oldVal){
     if (oldVal !== newVal){
     	ctrl.loggedIn = newVal;
     }
@@ -16,7 +16,6 @@ function NavController($scope,$window,SessionService,Auth,$state){
       }
 
       Auth.unsetUser();
-      delete $window.localStorage.loggedIn;
 
       $state.go('sessions.new');
     });
