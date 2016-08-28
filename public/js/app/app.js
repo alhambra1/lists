@@ -222,7 +222,7 @@ angular
   ///////* RUN *///////
 
   // http://stackoverflow.com/questions/27212182/angularjs-ui-router-how-to-redirect-to-login-page
-  .run(function($rootScope, $location, $state, $window, Auth) {
+  .run(function($rootScope, $location, $state, Auth, SessionService) {
 
       $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
           var isLoginOrSignup = (toState.name === "sessions.new" || toState.name === "users.new");
@@ -231,9 +231,16 @@ angular
           }
 
           // now, redirect only not authenticated
-          if (!Auth.isLoggedIn() && !$window.localStorage.loggedIn) {
-            e.preventDefault(); // stop current execution
-            $state.go('sessions.new'); // go to login
+          if (!Auth.isLoggedIn()) {
+            SessionService.getUserInfo().then(function(resp){
+              if (resp.data.error){
+                e.preventDefault(); // stop current execution
+                $state.go('sessions.new'); // go to login
+                
+              } else {
+                Auth.setUser(resp.data);
+              }
+            });
           }
       });
   });
