@@ -8,18 +8,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" ui-sref="lists.index">QLS</a>
+      <a class="navbar-brand" ui-sref="people.index">QLS</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div ng-if="ctrl.loggedIn" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ng-if="ctrl.loggedIn"><a ui-sref="lists.new">New List</a></li>
-        <li ng-if="ctrl.loggedIn"><a href="/#/search">Search</a></li>
+        <li ng-if="ctrl.loggedIn"><a ui-sref="people.new">New Person</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a ui-sref="users.show">Account</a></li>
-        <li><a href="" ng-click="ctrl.logout()">Logout</a></li>
       </ul>
 
     </div><!-- /.navbar-collapse -->
