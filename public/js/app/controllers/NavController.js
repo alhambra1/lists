@@ -1,7 +1,7 @@
 function NavController($scope,SessionService,Auth,$state){
   var ctrl = this;
 
-  ctrl.loggedIn = true; //!!Auth.isLoggedIn();
+  ctrl.loggedIn = !!Auth.isLoggedIn();
 
   $scope.$watch(function () { return !!Auth.isLoggedIn(); },function(newVal,oldVal){
     if (oldVal !== newVal){
